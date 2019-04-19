@@ -1,5 +1,5 @@
 import * as console from './lib/console.js';
-import { handleRoute } from './lib/http.js';
+import { handleRoute, fetch } from './lib/http.js';
 
 handleRoute('/app', req => {
   return {
@@ -10,11 +10,17 @@ handleRoute('/app', req => {
 });
 
 handleRoute('/google', req => {
-  console.log(req);
+  const r = fetch('http://www.mocky.io/v2/5185415ba171ea3a00704eed', {
+    method: 'GET',
+    headers: {},
+    body: '',
+  });
+
+  console.log(r.json().hello);
 
   return {
     statusCode: 200,
     headers: {},
-    body: 'Hello',
+    body: 'Google',
   };
 });

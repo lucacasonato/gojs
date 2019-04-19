@@ -11,5 +11,5 @@ func main() {
 		panic(err.Error())
 	}
 
-	httphandler.Start()
+	panic(httphandler.Start())
 }

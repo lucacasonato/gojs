@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"path/filepath"
 	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/ry/v8worker2"
@@ -59,7 +60,12 @@ func SetupWorkers(count int, file string) error {
 var regexpImportFrom = regexp.MustCompile(`(?m)import(?:["'\s]*([\w*{}\n, ]+)from\s*)?["'\s]*([@\w/_.-]+)["'\s].*`)
 
 func loadCode(worker *v8worker2.Worker, file string, name string, loaded map[string]bool) error {
-	js, err := ioutil.ReadFile(file)
+	fileToLoad := file
+	if !strings.HasSuffix(fileToLoad, ".js") {
+		fileToLoad += ".js"
+	}
+
+	js, err := ioutil.ReadFile(fileToLoad)
 	if err != nil {
 		return err
 	}
